@@ -1,0 +1,16 @@
+# Taste
+- Prefers Tailwind CSS for styling UI work (explicitly requested Tailwind for a redesign rather than plain CSS or other frameworks). Confidence: 0.9
+- Wants dark/light theme support with a toggle and persisted preference (explicitly requests "dark light theme"). Confidence: 0.9
+- Cares about a proper, consistent spacing scale in layouts (section rhythm, paddings, grid gaps) rather than ad-hoc spacing (repeatedly and explicitly asks for spacing redesigns). Confidence: 1.0
+- Cares about a cohesive color family — a unified accent palette with coordinated neutrals/surfaces across themes, not random colors. Confidence: 0.9
+- Values a professional, polished look for landing pages (asked for a "professional page" redesign). Confidence: 0.8
+- Prefers comprehensive design revamps covering multiple dimensions together (color, theme, spacing, typography, layout) over incremental tweaks — followed up an earlier redesign with a full "revamp" request. Confidence: 0.8
+- Prefers shadcn UI for component primitives (Switch, dialogs, etc.) over hand-rolled custom components — explicitly requested "use shadcn UI" to replace a custom toggle. Confidence: 0.9
+- Expects the page to scroll naturally at the body level — flagged broken page scroll (a `main { overflow: hidden }` clipping container fighting body scroll and breaking `position: sticky`) as a bug to fix. Confidence: 0.8
+- Values smooth, polished UI motion — explicitly asked for a sidebar with "smooth animation" (slide-in drawer with easing, backdrop fade, scroll lock, focus trap). Confidence: 0.8
+- Prefers the theme toggle as a fixed, always-visible element at the top-right of the viewport (floating above the header) rather than inline in header flow. Confidence: 0.6
+- Wants overlay/drawer layering to be correct: when a sidebar is open, the panel must be fully opaque with a darkening backdrop and proper z-index stacking so underlying content never bleeds through — reported the sidebar being hidden by the sticky header (a stacking-context trap) as a bug to fix. Confidence: 0.8
+- Expects page scroll to be fully restored after closing an overlay/drawer — reported being unable to scroll after opening and closing the sidebar as a bug (wants a robust scroll lock that can never leave the body permanently unscrollable). Confidence: 0.8
+- Wants content properly aligned across the whole page with consistent spacing and padding — sections should share a unified container width and identical padding so left/right edges line up, and section spacing rhythm should be consistent. Confidence: 0.8
+- Wants the hamburger menu (mobile nav control) pinned to the top-right corner of the viewport as a floating element (e.g. `fixed right-4 top-4`) rather than inline in the header flow, so it stays at the viewport edge even when the header is constrained by a max-width container. Confidence: 0.8
+- Wants navigation to show a persistent active state for the section currently in view (scrollspy via IntersectionObserver) — the active nav item should stay highlighted as the user scrolls, in both the desktop nav and the mobile sidebar. Confidence: 0.7
