@@ -13,12 +13,14 @@
   --color-paper: #f7f7f5; /* light page background */
   --color-paper-2: #efefea; /* light raised surface */
   --color-paper-3: #fafaf7; /* light card surface */
+  --color-paper-cool: #f0f3f8; /* light cool-tinted section (research blog) */
   --color-card: #ffffff; /* light card surface */
   --color-ink: #151a1f; /* light primary text */
   --color-muted: #5c6672; /* light secondary text */
   --color-line: #e3e4df; /* light hairlines */
   --color-dark: #0b0e13; /* dark page background */
   --color-dark-2: #11151c; /* dark raised surface */
+  --color-dark-cool: #0d131b; /* dark cool-tinted section (research blog) */
   --color-dark-card: #161b24; /* dark card surface */
   --color-light: #eef1f6; /* dark primary text */
   --color-light-muted: #99a3b2; /* dark secondary text */

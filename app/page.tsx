@@ -91,6 +91,54 @@ function Arrow() {
   );
 }
 
+/* Each content section gets its own surface so consecutive sections read as
+   distinct beats instead of one continuous page. */
+const sectionSurfaces = {
+  work: {
+    section:
+      "border-t border-line bg-paper-2/60 dark:border-dark-line dark:bg-dark",
+    eyebrow: "text-accent-ink dark:text-accent-soft",
+    item: "border-line hover:bg-paper-3/80 dark:border-dark-line dark:hover:bg-dark-2/60",
+  },
+  approach: {
+    section: "bg-dark-2 text-light dark:bg-dark-2",
+    eyebrow: "text-accent-soft",
+    item: "border-dark-line hover:bg-accent/[0.05]",
+  },
+  insights: {
+    section: "border-t border-line bg-paper-cool dark:border-dark-line dark:bg-dark-cool",
+    eyebrow: "text-accent-ink dark:text-accent-soft",
+    item: "border-line hover:bg-card/70 dark:border-dark-line dark:hover:bg-dark-2/50",
+  },
+  about: {
+    section: "bg-paper dark:bg-dark",
+    eyebrow: "text-accent-ink dark:text-accent-soft",
+    item: "border-line dark:border-dark-line",
+  },
+  contact: {
+    section: "bg-dark text-light dark:bg-dark",
+    eyebrow: "text-accent-soft",
+    item: "border-dark-line",
+  },
+} as const;
+
+const sectionIndexes = {
+  work: "01",
+  approach: "02",
+  insights: "03",
+  about: "04",
+  contact: "05",
+} as const;
+
+function SectionIndex({ id }: { id: keyof typeof sectionIndexes }) {
+  return (
+    <span className="mt-4 inline-flex items-center gap-2.5 font-mono text-[10px] tracking-[0.18em] text-muted/80 dark:text-light-muted/80">
+      <span className="h-px w-6 bg-current opacity-60" />
+      ER / {sectionIndexes[id]}
+    </span>
+  );
+}
+
 function Brand() {
   return (
     <span className="flex items-center gap-3">
@@ -184,7 +232,7 @@ export default function Home() {
           HEADER
       ═══════════════════════════════════════════ */}
 
-      <header className="sticky top-0 z-50 mx-auto grid h-[74px] w-full max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-8 border-b border-line/70 bg-paper/90 px-6 backdrop-blur-md sm:h-[82px] sm:px-10 lg:px-16 dark:border-dark-line/70 dark:bg-dark/90">
+      <header className="sticky top-0 z-50 grid h-[74px] w-full grid-cols-[1fr_auto_1fr] items-center gap-8 border-b border-line/70 bg-paper/90 px-6 backdrop-blur-md sm:h-[82px] sm:px-10 lg:px-16 dark:border-dark-line/70 dark:bg-dark/90">
         <a href="#top" aria-label="Eigen Research home">
           <Brand />
         </a>
@@ -343,13 +391,21 @@ export default function Home() {
       ═══════════════════════════════════════════ */}
 
       <section
-        className="border-t border-line py-24 sm:py-32 dark:border-dark-line dark:bg-dark"
+        className={cn("py-24 sm:py-32", sectionSurfaces.work.section)}
         id="work"
       >
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 sm:px-10 lg:grid-cols-[0.62fr_1.5fr_0.8fr] lg:gap-12 lg:px-16">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted dark:text-light-muted">
-            What we do
-          </p>
+          <div>
+            <p
+              className={cn(
+                "text-[11px] font-semibold uppercase tracking-[0.14em] text-muted dark:text-light-muted",
+                sectionSurfaces.work.eyebrow
+              )}
+            >
+              What we do
+            </p>
+            <SectionIndex id="work" />
+          </div>
 
           <h2 className="font-serif text-[clamp(36px,4.6vw,64px)] font-medium leading-[1.02] tracking-[-0.02em]">
             Technical depth for decisions that deserve more than a pitch deck.
@@ -366,7 +422,10 @@ export default function Home() {
         <div className="mx-auto mt-16 max-w-[1400px] px-6 sm:px-10 lg:px-16">
           {services.map((service) => (
             <article
-              className="group grid grid-cols-1 items-start gap-4 border-t border-line py-10 transition-colors duration-200 last:border-b hover:bg-paper-3/70 md:grid-cols-[80px_1fr_1.4fr] md:gap-10 dark:border-dark-line dark:hover:bg-dark-2/60"
+              className={cn(
+                "group grid grid-cols-1 items-start gap-4 border-t py-10 transition-colors duration-200 last:border-b md:grid-cols-[80px_1fr_1.4fr] md:gap-10",
+                sectionSurfaces.work.item
+              )}
               key={service.number}
             >
               <span className="font-serif text-[13px] italic text-muted dark:text-light-muted">
@@ -398,7 +457,10 @@ export default function Home() {
       ═══════════════════════════════════════════ */}
 
       <section
-        className="relative overflow-hidden bg-dark-2 py-24 text-light sm:py-32 dark:bg-dark-2"
+        className={cn(
+          "relative overflow-hidden py-24 text-light sm:py-32",
+          sectionSurfaces.approach.section
+        )}
         id="approach"
       >
         {/* Accent glow */}
@@ -407,10 +469,19 @@ export default function Home() {
           className="pointer-events-none absolute -top-44 left-1/4 -z-10 h-[460px] w-[820px] bg-[radial-gradient(ellipse,rgba(99,102,241,0.16),transparent_70%)]"
         />
 
+        {/* Signature indent block */}
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 sm:px-10 lg:grid-cols-[0.62fr_1.5fr_0.8fr] lg:gap-12 lg:px-16">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-light-muted">
-            Our approach
-          </p>
+          <div>
+            <p
+              className={cn(
+                "text-[11px] font-semibold uppercase tracking-[0.14em] text-light-muted",
+                sectionSurfaces.approach.eyebrow
+              )}
+            >
+              Our approach
+            </p>
+            <span className="mt-3 inline-block h-[5px] w-10 rounded-full bg-accent dark:bg-accent-soft" />
+          </div>
 
           <h2 className="font-serif text-[clamp(36px,4.6vw,64px)] font-medium leading-[1.02] tracking-[-0.02em] text-light">
             Demystifying the hype vs. reality.
@@ -423,10 +494,21 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mx-auto mt-16 grid max-w-[1400px] grid-cols-1 border-t border-l border-dark-line px-6 sm:px-10 md:grid-cols-2 lg:grid-cols-3 lg:px-16">
+        {/* Index ruler */}
+        <div className="mx-auto mt-12 hidden max-w-[1400px] items-center gap-5 px-6 sm:px-10 lg:flex lg:px-16">
+          <span className="font-mono text-[10px] tracking-[0.18em] text-light-muted/70">
+            ER / 02
+          </span>
+          <span className="h-px flex-1 bg-dark-line" />
+        </div>
+
+        <div className="mx-auto mt-12 grid max-w-[1400px] grid-cols-1 border-t border-l border-dark-line px-6 sm:px-10 md:grid-cols-2 lg:grid-cols-3 lg:px-16">
           {analysisColumns.map((item) => (
             <article
-              className="min-h-[174px] border-b border-r border-dark-line p-6 transition-colors duration-200 hover:bg-accent/[0.05] md:p-7"
+              className={cn(
+                "min-h-[174px] border-b border-r p-6 transition-colors duration-200 md:p-7",
+                sectionSurfaces.approach.item
+              )}
               key={item.number}
             >
               <div className="flex items-center gap-4">
@@ -453,13 +535,21 @@ export default function Home() {
       ═══════════════════════════════════════════ */}
 
       <section
-        className="border-t border-line py-24 sm:py-32 dark:border-dark-line dark:bg-dark"
+        className={cn("py-24 sm:py-32", sectionSurfaces.insights.section)}
         id="insights"
       >
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 sm:px-10 lg:grid-cols-[0.62fr_1.5fr_0.8fr] lg:gap-12 lg:px-16">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted dark:text-light-muted">
-            Research Blog
-          </p>
+          <div>
+            <p
+              className={cn(
+                "text-[11px] font-semibold uppercase tracking-[0.14em] text-muted dark:text-light-muted",
+                sectionSurfaces.insights.eyebrow
+              )}
+            >
+              Research Blog
+            </p>
+            <SectionIndex id="insights" />
+          </div>
 
           <h2 className="font-serif text-[clamp(36px,4.6vw,64px)] font-medium leading-[1.02] tracking-[-0.02em]">
             Quantum claims, examined and explained.
@@ -475,7 +565,10 @@ export default function Home() {
         <div className="mx-auto mt-16 max-w-[1400px] px-6 sm:px-10 lg:px-16">
           {notes.map((note, index) => (
             <article
-              className="group grid grid-cols-1 items-baseline gap-4 border-t border-line py-10 transition-colors duration-200 last:border-b hover:bg-paper-3/70 md:grid-cols-[80px_1fr_1.4fr] md:gap-10 dark:border-dark-line dark:hover:bg-dark-2/60"
+              className={cn(
+                "group grid grid-cols-1 items-baseline gap-4 border-t py-10 transition-colors duration-200 last:border-b md:grid-cols-[80px_1fr_1.4fr] md:gap-10",
+                sectionSurfaces.insights.item
+              )}
               key={note.title}
             >
               <span className="font-serif text-[13px] italic text-muted dark:text-light-muted">
@@ -511,12 +604,20 @@ export default function Home() {
           ABOUT
       ═══════════════════════════════════════════ */}
 
-      <section className="bg-paper-2 py-24 sm:py-32 dark:bg-dark-2" id="about">
+      <section className={cn("py-24 sm:py-32", sectionSurfaces.about.section)} id="about">
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 sm:px-10 lg:grid-cols-[0.62fr_2.3fr] lg:gap-12 lg:px-16">
           <div className="flex flex-col justify-between">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted dark:text-light-muted">
-              About Eigen Research
-            </p>
+            <div>
+              <p
+                className={cn(
+                  "text-[11px] font-semibold uppercase tracking-[0.14em] text-muted dark:text-light-muted",
+                  sectionSurfaces.about.eyebrow
+                )}
+              >
+                About Eigen Research
+              </p>
+              <SectionIndex id="about" />
+            </div>
 
             <div className="mt-16 font-serif text-[clamp(48px,6vw,92px)] italic leading-none tracking-[-0.06em] text-accent/[0.14] dark:text-accent-soft/[0.12]">
               E(λ)
@@ -553,7 +654,10 @@ export default function Home() {
       ═══════════════════════════════════════════ */}
 
       <section
-        className="relative overflow-hidden bg-dark py-24 text-light sm:py-32 dark:bg-dark"
+        className={cn(
+          "relative overflow-hidden py-24 text-light sm:py-32",
+          sectionSurfaces.contact.section
+        )}
         id="contact"
       >
         {/* Accent glow */}
@@ -563,10 +667,18 @@ export default function Home() {
         />
 
         <div className="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16">
-          <div className="flex items-center justify-between gap-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-light-muted">
-              Work with Eigen Research
-            </p>
+          <div className="flex items-start justify-between gap-8">
+            <div>
+              <p
+                className={cn(
+                  "text-[11px] font-semibold uppercase tracking-[0.14em] text-light-muted",
+                  sectionSurfaces.contact.eyebrow
+                )}
+              >
+                Work with Eigen Research
+              </p>
+              <SectionIndex id="contact" />
+            </div>
             <span className="font-mono text-[9px] text-light-muted/80">
               ER / CONTACT
             </span>
@@ -604,14 +716,14 @@ export default function Home() {
           FOOTER
       ═══════════════════════════════════════════ */}
 
-      <footer className="grid grid-cols-1 gap-10 border-t border-line bg-paper px-6 py-10 sm:px-10 lg:grid-cols-2 lg:px-16 dark:border-dark-line dark:bg-dark">
+      <footer className="grid grid-cols-1 items-center gap-3 border-t border-line bg-paper px-6 py-5 sm:px-10 md:grid-cols-2 md:gap-10 lg:px-16 dark:border-dark-line dark:bg-dark">
         <a href="#top" aria-label="Eigen Research home">
           <Brand />
         </a>
 
-        <div className="max-w-[600px] text-[10.5px] leading-[1.55] text-muted lg:justify-self-end dark:text-light-muted">
+        <div className="max-w-[600px] text-[10.5px] leading-[1.55] text-muted md:justify-self-end dark:text-light-muted">
           <p className="m-0">© 2026 Eigen Research. All rights reserved.</p>
-          <p className="m-0 mt-2.5">
+          <p className="m-0 mt-1.5">
             Eigen Research provides technical research and analysis. It does not
             provide legal, financial, or investment advice.
           </p>
